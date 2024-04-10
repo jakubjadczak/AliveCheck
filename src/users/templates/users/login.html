@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Login{% endblock%}
+
+{% block content %}
+
+  <style>
+        .form-signin {
+            width: 100%;
+            max-width: 330px;
+            padding: 15px;
+            margin: auto;
+        }
+        .form-signin .checkbox {
+            font-weight: 400;
+        }
+        .form-signin .form-control {
+            position: relative;
+            box-sizing: border-box;
+            height: auto;
+            padding: 10px;
+            font-size: 16px;
+        }
+        .form-signin .form-control:focus {
+            z-index: 2;
+        }
+        .form-signin input[type="email"] {
+            margin-bottom: -1px;
+            border-bottom-right-radius: 0;
+            border-bottom-left-radius: 0;
+        }
+        .form-signin input[type="password"] {
+            margin-bottom: 10px;
+            border-top-left-radius: 0;
+            border-top-right-radius: 0;
+        }
+        .centered {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+        .logo {
+            width: 72px;
+            height: 72px;
+            margin-bottom: 20px;
+        }
+  </style>
+
+  <div class="text-center centered">
+      <form class="form-signin" method="post">
+          {% csrf_token %}
+          <img class="mb-4 logo" src="{% static 'img/logo.png' %}" width="60" height="52" alt="logo">
+          <h1 class="h3 mb-3 font-weight-normal">Zaloguj się</h1>
+          {{ form.as_p }}
+          <button class="btn btn-lg btn-primary btn-block" type="submit">Zaloguj</button>
+      </form>
+  </div>
+{% endblock %}

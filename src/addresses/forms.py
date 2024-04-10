@@ -27,3 +27,21 @@ class IPAddressForm(forms.ModelForm):
             "description",
             Submit("submit", "Submit"),
         )
+
+
+class GroupForm(forms.ModelForm):
+    class Meta:
+        model = Group
+        fields = ["name", "description"]
+
+
+class LabelForm(forms.ModelForm):
+    class Meta:
+        model = Label
+        fields = ["name", "description"]
+
+
+class VlanForm(forms.ModelForm):
+    class Meta:
+        model = Vlan
+        fields = ["number", "name", "description"]

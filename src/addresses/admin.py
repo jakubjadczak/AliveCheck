@@ -21,6 +21,7 @@ class IPAddressAdmin(admin.ModelAdmin):
     list_display = ("address", "mask", "group", "subnet", "description")
     list_filter = ("group", "vlan")
     search_fields = ("address",)
+    filter_horizontal = ("label",)
 
 
 class PingStatAdmin(admin.ModelAdmin):

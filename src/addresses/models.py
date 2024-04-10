@@ -32,7 +32,7 @@ class IPAddress(models.Model):
     group = models.ForeignKey(Group, on_delete=models.CASCADE)
     label = models.ManyToManyField(Label)
     vlan = models.ForeignKey(Vlan, on_delete=models.CASCADE, null=True, blank=True)
-    subnet = models.GenericIPAddressField(null=True, blank=True)
+    subnet = models.CharField(max_length=100, blank=True)
     description = models.TextField(blank=True)
 
     def __str__(self):

@@ -1,9 +1,11 @@
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic.edit import CreateView
+from django.views.generic.list import ListView
 from .models import IPAddress
 from .forms import IPAddressForm, GroupForm, LabelForm, VlanForm
 from django.contrib import messages
+from django.utils import timezone
 from .utils import calc_subnet
 
 
@@ -56,3 +58,13 @@ class VlanCreateView(CreateView):
     def form_valid(self, form):
         messages.success(self.request, "Vlan created successfully!")
         return super().form_valid(form)
+
+
+class IPAddressesListView(ListView):
+    model = IPAddress
+    template_name = "addresses/ip_addr_list_view.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["now"] = timezone.now()
+        return context

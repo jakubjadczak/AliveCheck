@@ -1,0 +1,135 @@
+{% extends 'base.html' %}
+
+{% block title %}
+  Dashboard
+{% endblock %}
+
+{% block content %}
+  <style>
+    .UList {
+      list-style-type: none;
+    }
+
+    .green-dot::before {
+    content: ""; /* Niezbędne dla pseudo-elementów */
+    display: inline-block; /* Umożliwia ustawienie rozmiaru */
+    width: 10px; /* Szerokość kropki */
+    height: 10px; /* Wysokość kropki */
+    background-color: green; /* Kolor kropki */
+    border-radius: 50%; /* Sprawia, że jest okrągła */
+    margin-right: 5px; /* Odstęp od tekstu */
+    vertical-align: middle; /* Centrowanie względem linii tekstu */
+  }
+
+  .red-dot::before {
+    content: ""; /* Niezbędne dla pseudo-elementów */
+    display: inline-block; /* Umożliwia ustawienie rozmiaru */
+    width: 10px; /* Szerokość kropki */
+    height: 10px; /* Wysokość kropki */
+    background-color: red; /* Kolor kropki */
+    border-radius: 50%; /* Sprawia, że jest okrągła */
+    margin-right: 5px; /* Odstęp od tekstu */
+    vertical-align: middle; /* Centrowanie względem linii tekstu */
+  }
+
+  .yellow-dot::before {
+    content: ""; /* Niezbędne dla pseudo-elementów */
+    display: inline-block; /* Umożliwia ustawienie rozmiaru */
+    width: 10px; /* Szerokość kropki */
+    height: 10px; /* Wysokość kropki */
+    background-color: yellow; /* Kolor kropki */
+    border-radius: 50%; /* Sprawia, że jest okrągła */
+    margin-right: 5px; /* Odstęp od tekstu */
+    vertical-align: middle; /* Centrowanie względem linii tekstu */
+  }
+  </style>
+
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-4 col-md-12">
+        <div class="row">
+          <div class="col-4">
+            Groups<hr />
+            <ul class="UList">
+              <li>
+                <a href="">Group1</a>
+              </li>
+              <li>
+                <a href="">Group2</a>
+              </li>
+            </ul>
+          </div>
+          <div class="col-4">
+            Subnetworks<hr />
+            <ul class="UList">
+              <li>
+                <a href="">Sub1</a>
+              </li>
+              <li>
+                <a href="">Sub2</a>
+              </li>
+            </ul>
+          </div>
+
+          <div class="col-4">
+            Vlans<hr />
+            <ul class="UList">
+              <li>
+                <a href="">Vlan1</a>
+              </li>
+              <li>
+                <a href="">Vlan2</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-8 col-md-12">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Address</th>
+              <th scope="col">Last Ping</th>
+              <th scope="col">Group</th>
+              <th scope="col">Sub</th>
+              <th scope="col">Vlan</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">1</th>
+              <td>
+                <a href="#" class="green-dot">Address</a>
+              </td>
+              <td>Otto</td>
+              <td>@mdo</td>
+              <td>@mdo</td>
+              <td>@mdo</td>
+            </tr>
+            <tr>
+              <th scope="row">2</th>
+              <td>
+                <a href="#" class="red-dot">Address</a>
+              </td>
+              <td>Thornton</td>
+              <td>@fat</td>
+              <td>@fat</td>
+              <td>@fat</td>
+            </tr>
+            <tr>
+              <th scope="row">3</th>
+              <td>
+                <a href="#" class="yellow-dot">Address</a>
+              </td>
+              <td>the Bird</td>
+              <td>@twitter</td>
+              <td>@twitter</td>
+              <td>@twitter</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+{% endblock %}

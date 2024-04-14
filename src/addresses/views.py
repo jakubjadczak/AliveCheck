@@ -19,10 +19,13 @@ class IPAddressCreateView(CreateView):
     def form_valid(self, form):
         address = form.cleaned_data["address"]
         mask = form.cleaned_data["mask"]
+        subnet = form.cleaned_data["subnet"]
+        print(mask, subnet)
 
-        subnet = calc_subnet(address, mask)
-        form.instance.subnet = subnet
-        form.save()
+        if mask != "" and subnet == "":
+            subnet = calc_subnet(address, mask)
+            form.instance.subnet = subnet
+            form.save()
 
         messages.success(self.request, "IP Address created successfully!")
         return super().form_valid(form)
@@ -59,16 +62,6 @@ class VlanCreateView(CreateView):
     def form_valid(self, form):
         messages.success(self.request, "Vlan created successfully!")
         return super().form_valid(form)
-
-
-# class IPAddressesListView(ListView):
-#     model = IPAddress
-#     template_name = "addresses/ip_addr_list_view.html"
-
-#     def get_context_data(self, **kwargs):
-#         context = super().get_context_data(**kwargs)
-#         context["now"] = timezone.now()
-#         return context
 
 
 class IPAddressesListView(View):

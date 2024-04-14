@@ -5,6 +5,7 @@ from .views import (
     LabelCreateView,
     VlanCreateView,
     IPAddressesListView,
+    IPAddresessDetailView,
 )
 
 app_name = "addrs"
@@ -18,4 +19,5 @@ urlpatterns = [
     path(
         "list/<str:obj>/<str:cond>/", IPAddressesListView.as_view(), name="filter_list"
     ),
+    path("address/<int:pk>/", IPAddresessDetailView.as_view(), name="address_detail"),
 ]

@@ -7,7 +7,7 @@ from .models import IPAddress, Group, Vlan, Label
 from .forms import IPAddressForm, GroupForm, LabelForm, VlanForm
 from django.contrib import messages
 from django.utils import timezone
-from .utils import calc_subnet
+from .utils import calc_subnet, simple_chart
 
 
 class IPAddressCreateView(CreateView):
@@ -95,4 +95,23 @@ class IPAddressesListView(View):
             "now": timezone.now(),
         }
 
+        print(context)
+
         return render(request, "addresses/ip_addr_list_view.html", context)
+
+
+class IPAddresessDetailView(View):
+    @staticmethod
+    def get(request, *args, **kwargs):
+        address_pk = kwargs.get("pk", None)
+        address = IPAddress.objects.get(pk=address_pk)
+
+        items = simple_chart()
+
+        context = {
+            "address": address,
+        }
+
+        context = {**context, **items}
+
+        return render(request, "addresses/address_details.html", context)

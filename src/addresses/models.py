@@ -52,6 +52,7 @@ class PingStat(models.Model):
     timestamp = models.DateTimeField(auto_now_add=True)
     avarage_response = models.FloatField()
     is_alive = models.BooleanField()
+    packet_loss = models.FloatField()
 
     def __str__(self):
         return f"{self.address} - {self.timestamp} - {self.is_alive}"

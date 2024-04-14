@@ -5,7 +5,57 @@
 {% endblock %}
 
 {% block content %}
+  <style>
+    .green-dot::before {
+    content: "";
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    background-color: green;
+    border-radius: 50%;
+    margin-right: 5px;
+    vertical-align: middle;
+  }
+
+  .red-dot::before {
+    content: "";
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    background-color: red;
+    border-radius: 50%;
+    margin-right: 5px;
+    vertical-align: middle;
+  }
+
+  .yellow-dot::before {
+    content: "";
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    background-color: yellow;
+    border-radius: 50%;
+    margin-right: 5px;
+    vertical-align: middle;
+  }
+  </style>
+
   <div class="container">
+    <div class="row justify-content-md-center">
+      <div class="col-md-auto">
+        <button type="button" class="btn btn-secondary">Edit</button>
+      </div>
+      <div class="col-md-auto">
+        <form method="post" action="{% url 'addrs:ping' pk=address.pk %}">
+          {% csrf_token %}
+          <input type="submit" value="Ping manually" class="btn btn-primary">
+        </form>
+      </div>
+      <div class="col-md-auto">
+        <button type="button" class="btn btn-danger">Delete</button>
+      </div>
+    </div>
+    <hr>
     <div class="row">
       <div class="col-lg-6 col-md-12">
         <table class="table table-striped">
@@ -70,30 +120,36 @@
       <thead>
         <tr>
           <th scope="col">#</th>
-          <th scope="col">First</th>
-          <th scope="col">Last</th>
-          <th scope="col">Handle</th>
+          <th scope="col">Address</th>
+          <th scope="col">Timestamp</th>
+          <th scope="col">Status</th>
+          <th scope="col">Avarege response time</th>
+          <th scope="col">Packets lost</th>
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <th scope="row">1</th>
-          <td>Mark</td>
-          <td>Otto</td>
-          <td>@mdo</td>
-        </tr>
-        <tr>
-          <th scope="row">2</th>
-          <td>Jacob</td>
-          <td>Thornton</td>
-          <td>@fat</td>
-        </tr>
-        <tr>
-          <th scope="row">3</th>
-          <td>Larry</td>
-          <td>the Bird</td>
-          <td>@twitter</td>
-        </tr>
+        {% for stat in ping_stats %}
+          <tr>
+            <th scope="row">{{ forloop.counter }}</th>
+            <td>
+              {% if stat.is_alive %}
+                <p class="green-dot">{{ address.address }}</p>
+              {% else %}
+                <p class="red-dot">{{ address.address }}</p>
+              {% endif %}
+            </td>
+            <td>{{ stat.timestamp }}</td>
+            <td>
+              {% if stat.is_alive %}
+                Alive
+              {% else %}
+                Not responding
+              {% endif %}
+            </td>
+            <td>{{ stat.avarage_response }}</td>
+            <td>{{ stat.packet_loss }}</td>
+          </tr>
+        {% endfor %}
       </tbody>
     </table>
   </div>

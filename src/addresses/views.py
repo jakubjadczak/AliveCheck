@@ -1,13 +1,13 @@
-from django.shortcuts import render
-from django.urls import reverse_lazy
+from django.shortcuts import render, redirect, get_object_or_404
+from django.urls import reverse, reverse_lazy
 from django.views.generic.edit import CreateView
 from django.views.generic.list import ListView
 from django.views import View
-from .models import IPAddress, Group, Vlan, Label
+from .models import IPAddress, Group, Vlan, Label, PingStat
 from .forms import IPAddressForm, GroupForm, LabelForm, VlanForm
 from django.contrib import messages
 from django.utils import timezone
-from .utils import calc_subnet, simple_chart
+from .utils import calc_subnet, simple_chart, ping_ip, PingParmas, PingResponse
 
 
 class IPAddressCreateView(CreateView):
@@ -105,13 +105,36 @@ class IPAddresessDetailView(View):
     def get(request, *args, **kwargs):
         address_pk = kwargs.get("pk", None)
         address = IPAddress.objects.get(pk=address_pk)
+        ping_stats = PingStat.objects.filter(address=address).order_by("-timestamp")
 
         items = simple_chart()
 
         context = {
             "address": address,
+            "ping_stats": ping_stats,
         }
 
         context = {**context, **items}
 
         return render(request, "addresses/address_details.html", context)
+
+
+class ManuallyPingView(View):
+    @staticmethod
+    def post(request, *args, **kwargs):
+        pk = kwargs.get("pk", None)
+        print(pk)
+        address = get_object_or_404(
+            IPAddress, id=pk
+        )  # TODO checking if address exists, duplicate
+        result = ping_ip(address)
+        response = PingResponse(**result)
+
+        response_dict = response.model_dump()
+        response_dict["address"] = address
+
+        PingStat.objects.create(**response_dict)
+
+        messages.success(request, "Ping result saved successfully!")
+
+        return redirect(reverse("addrs:address_detail", kwargs={"pk": address.pk}))

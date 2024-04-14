@@ -6,6 +6,7 @@ from .views import (
     VlanCreateView,
     IPAddressesListView,
     IPAddresessDetailView,
+    ManuallyPingView,
 )
 
 app_name = "addrs"
@@ -20,4 +21,5 @@ urlpatterns = [
         "list/<str:obj>/<str:cond>/", IPAddressesListView.as_view(), name="filter_list"
     ),
     path("address/<int:pk>/", IPAddresessDetailView.as_view(), name="address_detail"),
+    path("ping/<int:pk>/", ManuallyPingView.as_view(), name="ping"),
 ]

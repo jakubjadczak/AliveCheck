@@ -26,6 +26,12 @@ class Vlan(models.Model):
         return self.name
 
 
+class IPAddressManager(models.Manager):
+    def get_subnets(self):
+        array = self.values_list("subnet", flat=True).distinct()
+        return [a for a in array if a != ""]
+
+
 class IPAddress(models.Model):
     address = models.GenericIPAddressField()
     mask = models.GenericIPAddressField(null=True, blank=True)
@@ -34,6 +40,8 @@ class IPAddress(models.Model):
     vlan = models.ForeignKey(Vlan, on_delete=models.CASCADE, null=True, blank=True)
     subnet = models.CharField(max_length=100, blank=True)
     description = models.TextField(blank=True)
+
+    objects = IPAddressManager()
 
     def __str__(self):
         return str(self.address)

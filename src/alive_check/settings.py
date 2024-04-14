@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     "django_bootstrap_icons",
     "crispy_forms",
     "crispy_bootstrap5",
+    "django_extensions",
 ]
 
 MIDDLEWARE = [
@@ -134,3 +135,21 @@ LOGIN_REDIRECT_URL = "/"
 LOGOUT_REDIRECT_URL = "/"
 
 CRISPY_TEMPLATE_PACK = "bootstrap5"
+
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "handlers": {
+        "console": {
+            "level": "DEBUG",
+            "class": "logging.StreamHandler",
+        },
+    },
+    "loggers": {
+        "django": {
+            "handlers": ["console"],
+            "level": "INFO",
+            "propagate": True,
+        },
+    },
+}

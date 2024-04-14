@@ -15,4 +15,7 @@ urlpatterns = [
     path("label/create/", LabelCreateView.as_view(), name="label"),
     path("vlan/create/", VlanCreateView.as_view(), name="vlan"),
     path("list/", IPAddressesListView.as_view(), name="list"),
+    path(
+        "list/<str:obj>/<str:cond>/", IPAddressesListView.as_view(), name="filter_list"
+    ),
 ]

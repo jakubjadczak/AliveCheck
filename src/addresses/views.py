@@ -2,7 +2,8 @@ from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic.edit import CreateView
 from django.views.generic.list import ListView
-from .models import IPAddress
+from django.views import View
+from .models import IPAddress, Group, Vlan, Label
 from .forms import IPAddressForm, GroupForm, LabelForm, VlanForm
 from django.contrib import messages
 from django.utils import timezone
@@ -60,11 +61,45 @@ class VlanCreateView(CreateView):
         return super().form_valid(form)
 
 
-class IPAddressesListView(ListView):
-    model = IPAddress
-    template_name = "addresses/ip_addr_list_view.html"
+# class IPAddressesListView(ListView):
+#     model = IPAddress
+#     template_name = "addresses/ip_addr_list_view.html"
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context["now"] = timezone.now()
-        return context
+#     def get_context_data(self, **kwargs):
+#         context = super().get_context_data(**kwargs)
+#         context["now"] = timezone.now()
+#         return context
+
+
+class IPAddressesListView(View):
+    @staticmethod
+    def get(request, *args, **kwargs):
+        filter_list = ["group", "subnet", "vlan"]
+        obj = kwargs.get("obj", None)
+        cond = kwargs.get("cond", None)
+
+        if obj == "subnet":
+            cond = cond.replace("-", "/")
+
+        if obj in filter_list and cond is not None:
+            addresses = IPAddress.objects.filter(**{obj: cond})
+        else:
+            addresses = IPAddress.objects.all()
+
+        groups = Group.objects.all()
+        vlans = Vlan.objects.all()
+        labels = Label.objects.all()
+        subnets = IPAddress.objects.get_subnets()
+
+        print(subnets)
+
+        context = {
+            "addresses": addresses,
+            "groups": groups,
+            "vlans": vlans,
+            "labels": labels,
+            "subnets": subnets,
+            "now": timezone.now(),
+        }
+
+        return render(request, "addresses/ip_addr_list_view.html", context)

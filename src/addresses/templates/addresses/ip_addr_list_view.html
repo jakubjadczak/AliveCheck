@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load addresess_custom %}
 
 {% block title %}
   Dashboard
@@ -11,75 +12,72 @@
     }
 
     .green-dot::before {
-    content: ""; /* Niezbędne dla pseudo-elementów */
-    display: inline-block; /* Umożliwia ustawienie rozmiaru */
-    width: 10px; /* Szerokość kropki */
-    height: 10px; /* Wysokość kropki */
-    background-color: green; /* Kolor kropki */
-    border-radius: 50%; /* Sprawia, że jest okrągła */
-    margin-right: 5px; /* Odstęp od tekstu */
-    vertical-align: middle; /* Centrowanie względem linii tekstu */
+    content: "";
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    background-color: green;
+    border-radius: 50%;
+    margin-right: 5px;
+    vertical-align: middle;
   }
 
   .red-dot::before {
-    content: ""; /* Niezbędne dla pseudo-elementów */
-    display: inline-block; /* Umożliwia ustawienie rozmiaru */
-    width: 10px; /* Szerokość kropki */
-    height: 10px; /* Wysokość kropki */
-    background-color: red; /* Kolor kropki */
-    border-radius: 50%; /* Sprawia, że jest okrągła */
-    margin-right: 5px; /* Odstęp od tekstu */
-    vertical-align: middle; /* Centrowanie względem linii tekstu */
+    content: "";
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    background-color: red;
+    border-radius: 50%;
+    margin-right: 5px;
+    vertical-align: middle;
   }
 
   .yellow-dot::before {
-    content: ""; /* Niezbędne dla pseudo-elementów */
-    display: inline-block; /* Umożliwia ustawienie rozmiaru */
-    width: 10px; /* Szerokość kropki */
-    height: 10px; /* Wysokość kropki */
-    background-color: yellow; /* Kolor kropki */
-    border-radius: 50%; /* Sprawia, że jest okrągła */
-    margin-right: 5px; /* Odstęp od tekstu */
-    vertical-align: middle; /* Centrowanie względem linii tekstu */
+    content: "";
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    background-color: yellow;
+    border-radius: 50%;
+    margin-right: 5px;
+    vertical-align: middle;
   }
   </style>
 
-  <div class="container">
+  <div class="container-fluid">
     <div class="row">
       <div class="col-lg-4 col-md-12">
         <div class="row">
           <div class="col-4">
             Groups<hr />
             <ul class="UList">
-              <li>
-                <a href="">Group1</a>
-              </li>
-              <li>
-                <a href="">Group2</a>
-              </li>
+              {% for group in groups %}
+                <li>
+                  <a href="{% url 'addrs:filter_list' obj="group" cond=group.id %}">{{ group }}</a>
+                </li>
+              {% endfor %}
             </ul>
           </div>
           <div class="col-4">
             Subnetworks<hr />
             <ul class="UList">
-              <li>
-                <a href="">Sub1</a>
-              </li>
-              <li>
-                <a href="">Sub2</a>
-              </li>
+              {% for subnet in subnets %}
+                <li>
+                  <a href="{% url 'addrs:filter_list' obj="subnet" cond=subnet|change_slash %}">{{ subnet }}</a>
+                </li>
+              {% endfor %}
             </ul>
           </div>
 
           <div class="col-4">
             Vlans<hr />
             <ul class="UList">
-              <li>
-                <a href="">Vlan1</a>
-              </li>
-              <li>
-                <a href="">Vlan2</a>
-              </li>
+              {% for vlan in vlans %}
+                <li>
+                  <a href="{% url 'addrs:filter_list' obj="vlan" cond=vlan.id %}">{{ vlan }}</a>
+                </li>
+              {% endfor %}
             </ul>
           </div>
         </div>
@@ -97,36 +95,18 @@
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <th scope="row">1</th>
-              <td>
-                <a href="#" class="green-dot">Address</a>
-              </td>
-              <td>Otto</td>
-              <td>@mdo</td>
-              <td>@mdo</td>
-              <td>@mdo</td>
-            </tr>
-            <tr>
-              <th scope="row">2</th>
-              <td>
-                <a href="#" class="red-dot">Address</a>
-              </td>
-              <td>Thornton</td>
-              <td>@fat</td>
-              <td>@fat</td>
-              <td>@fat</td>
-            </tr>
-            <tr>
-              <th scope="row">3</th>
-              <td>
-                <a href="#" class="yellow-dot">Address</a>
-              </td>
-              <td>the Bird</td>
-              <td>@twitter</td>
-              <td>@twitter</td>
-              <td>@twitter</td>
-            </tr>
+            {% for address in addresses %}
+              <tr>
+                <th scope="row">{{ forloop.counter }}</th>
+                <td>
+                  <a href="#" class="green-dot">{{ address }}</a>
+                </td>
+                <td>Last Ping</td>
+                <td>{{ address.group }}</td>
+                <td>{{ address.subnet }}</td>
+                <td>{{ address.vlan }}</td>
+              </tr>
+            {% endfor %}
           </tbody>
         </table>
       </div>

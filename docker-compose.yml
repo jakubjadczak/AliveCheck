@@ -2,11 +2,22 @@ version: '3.12'
 services:
   postgres:
     image: postgres:16
-    environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
-      - POSTGRES_DB=postgres
+    env_file:
+      - ./src/.env
     ports:
       - "5432:5432"
     volumes:
       - './postgres-data:/var/lib/postgresql/data'
+
+  app:
+    build: .
+    ports:
+      - "8001:8001"
+    volumes:
+      - './src:/src'
+    env_file:
+      - ./src/.env
+    depends_on:
+      - postgres
+    links:
+      - postgres

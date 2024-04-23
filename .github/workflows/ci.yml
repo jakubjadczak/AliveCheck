@@ -30,10 +30,13 @@ jobs:
 
     - name: Configure Poetry
       run: |
-        $HOME/.local/bin/poetry config virtualenvs.create false  # Optional: Configure Poetry to not create a virtual environment
+        $HOME/.local/bin/poetry config virtualenvs.create false
 
     - name: Install dependencies
       run: $HOME/.local/bin/poetry install
+
+    - name: Set DJANGO_SETTINGS_MODULE
+      run: echo "DJANGO_SETTINGS_MODULE=alive_check.settings" >> $GITHUB_ENV
 
     - name: Run tests
       run: $HOME/.local/bin/poetry run pytest

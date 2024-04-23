@@ -40,4 +40,5 @@ jobs:
       run: echo "DJANGO_SETTINGS_MODULE=alive_check.settings" >> $GITHUB_ENV
 
     - name: Run tests
+      working-directory: ./src
       run: $HOME/.local/bin/poetry run pytest

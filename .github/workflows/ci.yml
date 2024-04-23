@@ -33,6 +33,7 @@ jobs:
         $HOME/.local/bin/poetry config virtualenvs.create false
 
     - name: Install dependencies
+      working-directory: ./src
       run: $HOME/.local/bin/poetry install
 
     - name: Set DJANGO_SETTINGS_MODULE

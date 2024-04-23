@@ -12,7 +12,19 @@ django-bootstrap-icons = "^0.8.7"
 pre-commit = "^3.7.0"
 crispy-bootstrap4 = "^2024.1"
 crispy-bootstrap5 = "^2024.2"
+django-extensions = "^3.2.3"
+bokeh = "^3.4.1"
+icmplib = "^3.0.4"
+pydantic = "^2.7.0"
 
+
+[tool.poetry.group.dev.dependencies]
+werkzeug = "^3.0.2"
+
+
+[tool.poetry.group.test.dependencies]
+pytest = "^8.1.1"
+pytest-django = "^4.8.0"
 
 [build-system]
 requires = ["poetry-core"]

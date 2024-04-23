@@ -14,8 +14,6 @@ def calc_subnet(address: str, mask: str):
 
     network_address = network_interface.network
 
-    print(network_address)
-
     return network_address
 
 

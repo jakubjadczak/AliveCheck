@@ -10,11 +10,13 @@ services:
       - './postgres-data:/var/lib/postgresql/data'
 
   app:
-    build: .
+    build:
+      context: ./src/django_app
+      dockerfile: Dockerfile
     ports:
       - "8001:8001"
     volumes:
-      - './src:/src'
+      - './src/django_app:/django_app'
     env_file:
       - ./src/.env
     depends_on:

@@ -33,12 +33,12 @@ jobs:
         $HOME/.local/bin/poetry config virtualenvs.create false
 
     - name: Install dependencies
-      working-directory: ./src
+      working-directory: ./src/django_app
       run: $HOME/.local/bin/poetry install
 
     - name: Set DJANGO_SETTINGS_MODULE
       run: echo "DJANGO_SETTINGS_MODULE=alive_check.settings" >> $GITHUB_ENV
 
     - name: Run tests
-      working-directory: ./src
+      working-directory: ./src/django_app
       run: $HOME/.local/bin/poetry run pytest

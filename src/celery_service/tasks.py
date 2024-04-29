@@ -11,14 +11,21 @@ load_dotenv()
 
 logger = get_task_logger(__name__)
 
-app = Celery("tasks", broker="pyamqp://admin:admin@rabbitmq//")
+app = Celery(
+    "tasks",
+    broker=f"pyamqp://{os.getenv('RABBITMQ_DEFAULT_USER')}:{os.getenv('RABBITMQ_DEFAULT_PASS')}@{os.getenv('RABBITMQ_HOST')}//",
+)
 
 
 @app.task
 def send_msg():
-    credentials = pika.PlainCredentials("admin", "admin")
+    credentials = pika.PlainCredentials(
+        os.getenv("RABBITMQ_DEFAULT_USER"), os.getenv("RABBITMQ_DEFAULT_PASS")
+    )
     connection = pika.BlockingConnection(
-        pika.ConnectionParameters("rabbitmq", 5672, "/", credentials)
+        pika.ConnectionParameters(
+            os.getenv("RABBITMQ_HOST"), os.getenv("RABBITMQ_PORT"), "/", credentials
+        )
     )
     channel = connection.channel()
 

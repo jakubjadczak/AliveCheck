@@ -5,6 +5,7 @@ from celery.utils.log import get_task_logger
 from db_conn import fetch
 from dotenv import load_dotenv
 import os
+import json
 
 load_dotenv()
 
@@ -23,8 +24,15 @@ def send_msg():
 
     array = fetch()
     for a in array:
+        data = {"id": a[0], "ip_address": a[1]}
+        json_data = json.dumps(data)
         channel.queue_declare(queue="ip_addresses")
-        channel.basic_publish(exchange="", routing_key="ip_addresses", body=f"{a[1]}")
+        channel.basic_publish(
+            exchange="",
+            routing_key="ip_addresses",
+            body=json_data,
+            properties=pika.BasicProperties(content_type="application/json"),
+        )
 
     connection.close()
 

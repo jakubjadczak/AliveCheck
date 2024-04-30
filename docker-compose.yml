@@ -51,6 +51,20 @@ services:
     networks:
         - rabbitmq_net
 
+  pinging_service:
+    build:
+      context: ./src/pinging_service
+      dockerfile: Dockerfile
+    env_file:
+      - ./src/.env
+    depends_on:
+      - postgres
+      - rabbitmq
+      - celery_worker
+      - celery_beat
+    networks:
+        - rabbitmq_net
+
   app:
     build:
       context: ./src/django_app

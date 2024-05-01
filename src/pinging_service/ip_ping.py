@@ -34,6 +34,6 @@ def ping_ip(address: str, address_id: int):
         "is_alive": host.is_alive,
         "avarage_response": host.avg_rtt,
         "packet_loss": host.packet_loss,
-        "timestamp": timezone.now(),
+        "timestamp": datetime.now(),
         "address_id": address_id,
     }

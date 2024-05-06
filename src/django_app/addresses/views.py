@@ -145,3 +145,21 @@ class ManuallyPingView(View):
         messages.success(request, "Ping result saved successfully!")
 
         return redirect(reverse("addrs:address_detail", kwargs={"pk": address.pk}))
+
+
+class VlansListView(ListView):
+    model = Vlan
+    template_name = "addresses/vlan_list_view.html"
+    context_object_name = "vlans"
+
+
+class GroupsListView(ListView):
+    model = Group
+    template_name = "addresses/group_list_view.html"
+    context_object_name = "groups"
+
+
+class LabelsListView(ListView):
+    model = Label
+    template_name = "addresses/label_list_view.html"
+    context_object_name = "labels"

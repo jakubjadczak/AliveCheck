@@ -7,6 +7,9 @@ from .views import (
     IPAddressesListView,
     IPAddresessDetailView,
     ManuallyPingView,
+    VlansListView,
+    GroupsListView,
+    LabelsListView,
 )
 
 app_name = "addrs"
@@ -22,4 +25,7 @@ urlpatterns = [
     ),
     path("address/<int:pk>/", IPAddresessDetailView.as_view(), name="address_detail"),
     path("ping/<int:pk>/", ManuallyPingView.as_view(), name="ping"),
+    path("vlans/", VlansListView.as_view(), name="vlans"),
+    path("groups/", GroupsListView.as_view(), name="groups"),
+    path("labels/", LabelsListView.as_view(), name="labels"),
 ]

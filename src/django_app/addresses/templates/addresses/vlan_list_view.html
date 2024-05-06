@@ -1,0 +1,43 @@
+{% extends "settings_base.html" %}
+{% load bootstrap_icons %}
+
+{% block title %}Settings - VLANS{% endblock %}
+
+
+{% block content %}
+    <div class="container mt-4">
+        <div class="row">
+            <div class="col-5">
+                <h2>List of VLANS</h2>
+            </div>
+            <div class="col-4">
+            </div>
+            <div class="col-3">
+                <a href="{% url 'addrs:vlan' %}" type="button" class="btn btn-success">
+                {% bs_icon 'plus-circle' color='white' size='1.4em' %}
+                Add new vlan
+                </a>
+            </div>
+        </div>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Number</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for vlan in vlans %}
+                <tr>
+                    <th scope="row">{{ forloop.counter }}</th>
+                    <td>{{ vlan.number }}</td>
+                    <td>{{ vlan.name }}</td>
+                    <td>{{ vlan.description }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

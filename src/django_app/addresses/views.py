@@ -7,7 +7,14 @@ from .models import IPAddress, Group, Vlan, Label, PingStat
 from .forms import IPAddressForm, GroupForm, LabelForm, VlanForm
 from django.contrib import messages
 from django.utils import timezone
-from .utils import calc_subnet, simple_chart, ping_ip, PingParmas, PingResponse
+from .utils import (
+    calc_subnet,
+    simple_chart,
+    ping_ip,
+    PingParmas,
+    PingResponse,
+    response_time_chart,
+)
 
 
 class IPAddressCreateView(CreateView):
@@ -107,7 +114,7 @@ class IPAddresessDetailView(View):
         address = IPAddress.objects.get(pk=address_pk)
         ping_stats = PingStat.objects.filter(address=address).order_by("-timestamp")
 
-        items = simple_chart()
+        items = response_time_chart(address)
 
         context = {
             "address": address,

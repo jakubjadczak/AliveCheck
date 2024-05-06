@@ -47,6 +47,18 @@ class IPAddress(models.Model):
         return str(self.address)
 
 
+class PingStatManager(models.Manager):
+    def get_last_ping(self, address):
+        return self.filter(address=address).latest("timestamp")
+
+    def get_stats(self, address: IPAddress) -> tuple:
+        query_set = list(self.filter(address=address).order_by("timestamp"))
+        query_set = query_set[-200:]
+        return [ping.timestamp for ping in query_set], [
+            ping.avarage_response for ping in query_set
+        ]
+
+
 class PingStat(models.Model):
     address = models.ForeignKey(IPAddress, on_delete=models.CASCADE)
     timestamp = models.DateTimeField(auto_now_add=True)
@@ -56,3 +68,5 @@ class PingStat(models.Model):
 
     def __str__(self):
         return f"{self.address} - {self.timestamp} - {self.is_alive}"
+
+    objects = PingStatManager()

@@ -6,7 +6,7 @@ from django.utils import timezone
 from icmplib import ping
 from pydantic import BaseModel, ValidationError, IPvAnyAddress
 
-from .models import IPAddress
+from .models import IPAddress, PingStat
 
 
 def calc_subnet(address: str, mask: str):
@@ -34,6 +34,33 @@ def simple_chart():
     script, div = components(p)
 
     return {"script": script, "div": div}
+
+
+def build_chart(x, y, title, x_label, y_label):
+    p = figure(
+        title=title,
+        x_axis_label=x_label,
+        y_axis_label=y_label,
+        width=1000,
+        height=500,
+    )
+
+    p.line(x, y, legend_label="Response Time", line_width=2)
+
+    script, div = components(p)
+
+    return {"script": script, "div": div}
+
+
+def response_time_chart(address: IPAddress):
+    ping_history = PingStat.objects.get_stats(address=address)
+    x = ping_history[0]
+    y = ping_history[1]
+
+    print(x)
+    print(y)
+
+    return build_chart(x, y, "Response Time", "Time", "Response Time (ms)")
 
 
 class IPAddress(BaseModel):

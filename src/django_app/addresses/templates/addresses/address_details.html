@@ -67,15 +67,33 @@
             </tr>
             <tr>
               <td>Subnet</td>
-              <td>{{ address.subnet }}</td>
+              <td>
+                {% if address.subnet == None %}
+                  -
+                {% else %}
+                  {{ address.subnet }}
+                {% endif %}
+              </td>
             </tr>
             <tr>
               <td>Mask</td>
-              <td>{{ address.mask }}</td>
+              <td>
+                {% if address.mask == None %}
+                  -
+                {% else %}
+                  {{ address.mask }}
+                {% endif %}
+              </td>
             </tr>
             <tr>
               <td>Group</td>
-              <td>{{ address.group }}</td>
+               <td>
+                {% if address.group == None %}
+                  -
+                {% else %}
+                  {{ address.group }}
+                {% endif %}
+              </td>
             </tr>
           </tbody>
         </table>
@@ -87,7 +105,13 @@
           <tbody>
             <tr>
               <td>Vlan</td>
-              <td>{{ address.vlan }}</td>
+               <td>
+                {% if address.vlan == None %}
+                  -
+                {% else %}
+                  {{ address.vlan }}
+                {% endif %}
+              </td>
             </tr>
             <tr>
               <td>Label</td>
@@ -123,7 +147,7 @@
           <th scope="col">Address</th>
           <th scope="col">Timestamp</th>
           <th scope="col">Status</th>
-          <th scope="col">Avarege response time</th>
+          <th scope="col">Response time</th>
           <th scope="col">Packets lost</th>
         </tr>
       </thead>

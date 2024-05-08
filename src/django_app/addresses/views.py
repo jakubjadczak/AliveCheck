@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse, reverse_lazy
 from django.views.generic.edit import CreateView
 from django.views.generic.list import ListView
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views import View
 from .models import IPAddress, Group, Vlan, Label, PingStat
 from .forms import IPAddressForm, GroupForm, LabelForm, VlanForm
@@ -17,7 +18,7 @@ from .utils import (
 )
 
 
-class IPAddressCreateView(CreateView):
+class IPAddressCreateView(LoginRequiredMixin, CreateView):
     model = IPAddress
     form_class = IPAddressForm
     template_name = "addresses/create_address.html"
@@ -38,7 +39,7 @@ class IPAddressCreateView(CreateView):
         return super().form_valid(form)
 
 
-class GroupCreateView(CreateView):
+class GroupCreateView(LoginRequiredMixin, CreateView):
     model = IPAddress
     form_class = GroupForm
     template_name = "addresses/create_group.html"
@@ -49,7 +50,7 @@ class GroupCreateView(CreateView):
         return super().form_valid(form)
 
 
-class LabelCreateView(CreateView):
+class LabelCreateView(LoginRequiredMixin, CreateView):
     model = IPAddress
     form_class = LabelForm
     template_name = "addresses/create_label.html"
@@ -60,7 +61,7 @@ class LabelCreateView(CreateView):
         return super().form_valid(form)
 
 
-class VlanCreateView(CreateView):
+class VlanCreateView(LoginRequiredMixin, CreateView):
     model = IPAddress
     form_class = VlanForm
     template_name = "addresses/create_vlan.html"
@@ -71,7 +72,7 @@ class VlanCreateView(CreateView):
         return super().form_valid(form)
 
 
-class IPAddressesListView(View):
+class IPAddressesListView(LoginRequiredMixin, View):
     @staticmethod
     def get(request, *args, **kwargs):
         filter_list = ["group", "subnet", "vlan"]
@@ -107,7 +108,7 @@ class IPAddressesListView(View):
         return render(request, "addresses/ip_addr_list_view.html", context)
 
 
-class IPAddresessDetailView(View):
+class IPAddresessDetailView(LoginRequiredMixin, View):
     @staticmethod
     def get(request, *args, **kwargs):
         address_pk = kwargs.get("pk", None)
@@ -126,7 +127,7 @@ class IPAddresessDetailView(View):
         return render(request, "addresses/address_details.html", context)
 
 
-class ManuallyPingView(View):
+class ManuallyPingView(LoginRequiredMixin, View):
     @staticmethod
     def post(request, *args, **kwargs):
         pk = kwargs.get("pk", None)
@@ -147,19 +148,19 @@ class ManuallyPingView(View):
         return redirect(reverse("addrs:address_detail", kwargs={"pk": address.pk}))
 
 
-class VlansListView(ListView):
+class VlansListView(LoginRequiredMixin, ListView):
     model = Vlan
     template_name = "addresses/vlan_list_view.html"
     context_object_name = "vlans"
 
 
-class GroupsListView(ListView):
+class GroupsListView(LoginRequiredMixin, ListView):
     model = Group
     template_name = "addresses/group_list_view.html"
     context_object_name = "groups"
 
 
-class LabelsListView(ListView):
+class LabelsListView(LoginRequiredMixin, ListView):
     model = Label
     template_name = "addresses/label_list_view.html"
     context_object_name = "labels"

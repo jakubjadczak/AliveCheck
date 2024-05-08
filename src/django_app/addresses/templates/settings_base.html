@@ -106,12 +106,8 @@
             {% endfor %}
           {% endif %}
             <div class="row">
-              <div class="col-3">
-                      <div class="d-flex flex-column flex-shrink-0 p-3 text-bg-dark" style="width: 280px;">
-                    <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
-                      <svg class="bi pe-none me-2" width="40" height="32"><use xlink:href="#bootstrap"></use></svg>
-                      <span class="fs-4">Sidebar</span>
-                    </a>
+              <div class="col-md-3 col-12">
+                  <div class="text-bg-dark">
                     <hr>
                     <ul class="nav nav-pills flex-column mb-auto">
                       <li class="nav-item">
@@ -144,7 +140,7 @@
                     <hr>
                 </div>
               </div>
-              <div class="col-9">
+              <div class="col-md-9 col-12">
                 {% block content %}
                 {% endblock %}
               </div>
@@ -155,10 +151,10 @@
         <div class="container">
             <footer class="py-3 my-4">
                 <ul class="nav justify-content-center border-bottom pb-3 mb-3">
-                <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">Home</a></li>
-                <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">Dashboard</a></li>
-                <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">Add IP</a></li>
-                <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">Settings</a></li>
+                <li class="nav-item"><a href="{% url 'main:home' %}" class="nav-link px-2 text-body-secondary">Home</a></li>
+                <li class="nav-item"><a href="{% url 'addrs:list' %}" class="nav-link px-2 text-body-secondary">Dashboard</a></li>
+                <li class="nav-item"><a href="{% url 'addrs:create' %}" class="nav-link px-2 text-body-secondary">Add IP</a></li>
+                <li class="nav-item"><a href="{% url 'addrs:vlans' %}" class="nav-link px-2 text-body-secondary">Settings</a></li>
                 <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">About</a></li>
                 </ul>
                 <p class="text-center text-body-secondary">© 2024 Jakub Jadczak</p>

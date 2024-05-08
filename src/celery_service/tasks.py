@@ -47,6 +47,6 @@ def send_msg():
 app.conf.beat_schedule = {
     "print-every-minute": {
         "task": "tasks.send_msg",  # module.func
-        "schedule": 60.0,
+        "schedule": 600.0,
     },
 }

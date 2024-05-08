@@ -109,10 +109,28 @@
                 <td>
                   <a href="{% url 'addrs:address_detail' pk=address.id %}" class="green-dot">{{ address }}</a>
                 </td>
-                <td>Last Ping</td>
-                <td>{{ address.group }}</td>
-                <td>{{ address.subnet }}</td>
-                <td>{{ address.vlan }}</td>
+                <td>{{ address|get_last_ping }}</td>
+                <td>
+                  {% if address.group == None %}
+                    -
+                  {% else %}
+                    {{ address.group }}
+                  {% endif %}
+                </td>
+                <td>
+                  {% if address.subnet == None %}
+                    -
+                  {% else %}
+                    {{ address.subnet }}
+                  {% endif %}
+                </td>
+                <td>
+                  {% if address.vlan == None %}
+                    -
+                  {% else %}
+                    {{ address.vlan }}
+                  {% endif %}
+                </td>
               </tr>
             {% endfor %}
           </tbody>

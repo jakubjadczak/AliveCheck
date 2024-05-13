@@ -107,7 +107,11 @@
               <tr>
                 <th scope="row">{{ forloop.counter }}</th>
                 <td>
-                  <a href="{% url 'addrs:address_detail' pk=address.id %}" class="green-dot">{{ address }}</a>
+                  {% if address|get_status %}
+                    <a href="{% url 'addrs:address_detail' pk=address.id %}" class="green-dot">{{ address }}</a>
+                  {% else %}
+                    <a href="{% url 'addrs:address_detail' pk=address.id %}" class="red-dot">{{ address }}</a>
+                  {% endif %}
                 </td>
                 <td>{{ address|get_last_ping }}</td>
                 <td>

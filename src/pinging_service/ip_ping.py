@@ -1,4 +1,4 @@
-from datetime import timezone, datetime
+from datetime import datetime
 from pydantic import BaseModel, ValidationError, IPvAnyAddress
 from enum import Enum
 from icmplib import ping

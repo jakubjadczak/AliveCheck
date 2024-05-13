@@ -10,6 +10,8 @@ from .views import (
     VlansListView,
     GroupsListView,
     LabelsListView,
+    IPAddressUpdateView,
+    IPAddressDeleteView,
 )
 
 app_name = "addrs"
@@ -28,4 +30,6 @@ urlpatterns = [
     path("vlans/", VlansListView.as_view(), name="vlans"),
     path("groups/", GroupsListView.as_view(), name="groups"),
     path("labels/", LabelsListView.as_view(), name="labels"),
+    path("address/update/<int:pk>/", IPAddressUpdateView.as_view(), name="update"),
+    path("address/delete/<int:pk>/", IPAddressDeleteView.as_view(), name="delete"),
 ]

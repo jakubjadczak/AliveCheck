@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block title %}Update IP Address{% endblock %}
+
+{% block content %}
+  <h2>{{ title }}</h2>
+  <form method="post">
+    {% csrf_token %}
+    <div class="mb-3">
+      <label class="form-label">Address</label>
+      <input type="text" class="form-control" value="{{ form.instance.address }}" readonly>
+    </div>
+    {{ form|crispy }}
+    <button type="submit" class="btn btn-primary">Update</button>
+  </form>
+{% endblock %}

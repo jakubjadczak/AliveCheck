@@ -43,7 +43,7 @@
   <div class="container">
     <div class="row justify-content-md-center">
       <div class="col-md-auto">
-        <button type="button" class="btn btn-secondary">Edit</button>
+        <a href="{% url 'addrs:update' pk=address.pk %}" type="button" class="btn btn-secondary">Edit</a>
       </div>
       <div class="col-md-auto">
         <form method="post" action="{% url 'addrs:ping' pk=address.pk %}">
@@ -52,7 +52,7 @@
         </form>
       </div>
       <div class="col-md-auto">
-        <button type="button" class="btn btn-danger">Delete</button>
+        <a href="{% url 'addrs:delete' pk=address.pk %}" class="btn btn-danger">Delete</a>
       </div>
     </div>
     <hr>

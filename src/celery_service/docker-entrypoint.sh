@@ -1,7 +1,6 @@
 #!/bin/bash
 set -e
 
-# Sprawdzanie przekazanych argumentów do skryptu
 if [ "$1" = 'celery' ]; then
     case "$2" in
         "worker")

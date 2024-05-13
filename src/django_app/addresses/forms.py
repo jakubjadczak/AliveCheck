@@ -1,6 +1,6 @@
 from django import forms
 from crispy_forms.helper import FormHelper
-from crispy_forms.layout import Layout, Field, Submit
+from crispy_forms.layout import Layout, Field, Submit, Div
 from crispy_forms.bootstrap import InlineCheckboxes
 from .models import IPAddress, Label, Group, Vlan
 
@@ -26,6 +26,22 @@ class IPAddressForm(forms.ModelForm):
             "subnet",
             "description",
             Submit("submit", "Submit"),
+        )
+
+
+class IPAddressUpdateForm(forms.ModelForm):
+    class Meta:
+        model = IPAddress
+        fields = ["group", "label", "vlan", "description"]
+
+    def __init__(self, *args, **kwargs):
+        super(IPAddressUpdateForm, self).__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.layout = Layout(
+            Div("group", css_class="mb-3"),
+            Div("label", css_class="mb-3"),
+            Div("vlan", css_class="mb-3"),
+            Div("description", css_class="mb-3"),
         )
 
 

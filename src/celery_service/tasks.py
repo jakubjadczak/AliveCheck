@@ -1,6 +1,5 @@
 import pika
 from celery import Celery
-from celery.schedules import crontab
 from celery.utils.log import get_task_logger
 from db_conn import fetch
 from dotenv import load_dotenv

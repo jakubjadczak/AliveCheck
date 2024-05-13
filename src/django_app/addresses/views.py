@@ -1,11 +1,11 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse, reverse_lazy
-from django.views.generic.edit import CreateView
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic.list import ListView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views import View
 from .models import IPAddress, Group, Vlan, Label, PingStat
-from .forms import IPAddressForm, GroupForm, LabelForm, VlanForm
+from .forms import IPAddressForm, GroupForm, LabelForm, VlanForm, IPAddressUpdateForm
 from django.contrib import messages
 from django.utils import timezone
 from .utils import (
@@ -164,3 +164,31 @@ class LabelsListView(LoginRequiredMixin, ListView):
     model = Label
     template_name = "addresses/label_list_view.html"
     context_object_name = "labels"
+
+
+class IPAddressUpdateView(LoginRequiredMixin, UpdateView):
+    model = IPAddress
+    form_class = IPAddressUpdateForm
+    template_name = "addresses/ipaddress_form.html"
+    success_url = reverse_lazy("addrs:list")
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["title"] = "Update IP Address"
+        return context
+
+
+class IPAddressDeleteView(LoginRequiredMixin, DeleteView):
+    model = IPAddress
+    template_name = "addresses/ipaddress_confirm_delete.html"
+    success_url = reverse_lazy("addrs:list")
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["title"] = "Delete IP Address"
+        return context
+
+    def delete(self, request, *args, **kwargs):
+        response = super(IPAddressDeleteView, self).delete(request, *args, **kwargs)
+        messages.success(request, "IP Address has been deleted successfully.")
+        return response
